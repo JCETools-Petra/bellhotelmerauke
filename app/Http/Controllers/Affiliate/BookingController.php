@@ -13,6 +13,7 @@ use App\Helpers\FonnteApi; // Ditambahkan
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Models\ActivityLog;
 // Tambahkan ini jika belum ada
 use Midtrans\Config as MidtransConfig;
 use Midtrans\Snap as MidtransSnap;
@@ -120,23 +121,32 @@ class BookingController extends Controller
             'affiliate_id' => $affiliate->id,
             'guest_name' => $validated['guest_name'],
             'guest_phone' => $validated['guest_phone'],
-            
+
             // --- PERBAIKAN DI SINI ---
             // Menggunakan ?? '' untuk memastikan nilai tidak null jika validasi mengizinkan null
-            'guest_email' => $validated['guest_email'] ?? '', 
-            
+            'guest_email' => $validated['guest_email'] ?? '',
+
             'checkin_date' => $checkin->format('Y-m-d'),
             'checkout_date' => $checkout->format('Y-m-d'),
             'num_rooms' => $validated['num_rooms'],
             'total_price' => $finalPrice,
-            
+
             // --- PERUBAHAN STATUS ---
             // Jika bayar online, status 'pending'. Jika bayar di hotel, status 'awaiting_arrival'.
             'status' => $validated['payment_method'] === 'online' ? 'pending' : 'awaiting_arrival',
-            
+
             'payment_method' => $validated['payment_method'],
             'access_token' => Str::random(32),
         ]);
+
+        // Log activity for affiliate
+        ActivityLog::log(
+            'create',
+            "Created new booking #{$booking->id} for guest {$booking->guest_name}, room {$room->name}, total Rp " . number_format($finalPrice, 0, ',', '.'),
+            'Booking',
+            $booking->id,
+            ['data' => $booking->toArray()]
+        );
 
         // ==========================================================
         // PENAMBAHAN LOGIKA BERDASARKAN METODE PEMBAYARAN

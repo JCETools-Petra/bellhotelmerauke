@@ -47,6 +47,10 @@
                 <h6 class="px-4 pt-2 pb-1 text-xs font-semibold uppercase text-gray-400">User Management</h6>
                     <a href="{{ route('admin.users.index') }}" class="flex items-center rounded-md px-4 py-2.5 text-sm font-medium transition-colors {{ request()->routeIs('admin.users.*') ? 'bg-brand-gold text-brand-black' : 'hover:bg-gray-700 hover:text-white' }}">Users</a>
 
+                <hr class="border-gray-700 my-2">
+                <h6 class="px-4 pt-2 pb-1 text-xs font-semibold uppercase text-gray-400">Security & Monitoring</h6>
+                    <a href="{{ route('admin.activity-logs.index') }}" class="flex items-center rounded-md px-4 py-2.5 text-sm font-medium transition-colors {{ request()->routeIs('admin.activity-logs.*') ? 'bg-brand-gold text-brand-black' : 'hover:bg-gray-700 hover:text-white' }}">Activity Logs</a>
+
             @elseif(Auth::user()->role == 'accounting')
                 <h6 class="px-4 pt-2 pb-1 text-xs font-semibold uppercase text-gray-400">Affiliate Program</h6>
                 <a href="{{ route('admin.commissions.index') }}" class="flex items-center rounded-md px-4 py-2.5 text-sm font-medium transition-colors {{ request()->routeIs('admin.commissions.*') ? 'bg-brand-gold text-brand-black' : 'hover:bg-gray-700 hover:text-white' }}">
