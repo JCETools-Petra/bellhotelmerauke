@@ -18,9 +18,13 @@
                             <select name="role" id="role" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
                                 <option value="admin" @selected($user->role == 'admin')>Admin</option>
                                 <option value="accounting" @selected($user->role == 'accounting')>Accounting</option>
+                                <option value="frontoffice" @selected($user->role == 'frontoffice')>Front Office</option>
                                 <option value="affiliate" @selected($user->role == 'affiliate')>Affiliate</option>
                                 <option value="user" @selected($user->role == 'user')>User</option>
                             </select>
+                            <p class="mt-1 text-sm text-gray-500">
+                                <strong>Front Office:</strong> Can manage bookings and view commissions (limited data)
+                            </p>
                         </div>
                         <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md">Update User</button>
                     </form>
