@@ -8,6 +8,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\RoomController as FrontendRoomController;
 use App\Http\Controllers\Frontend\MiceController as FrontendMiceController;
 use App\Http\Controllers\Frontend\RestaurantController as FrontendRestaurantController;
+use App\Http\Controllers\Frontend\RecreationAreaController as FrontendRecreationAreaController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\BookingController;
 use App\Http\Controllers\Frontend\AffiliateController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\RoomController as AdminRoomController;
 use App\Http\Controllers\Admin\MiceRoomController as AdminMiceRoomController;
 use App\Http\Controllers\Admin\RestaurantController as AdminRestaurantController;
+use App\Http\Controllers\Admin\RecreationAreaController as AdminRecreationAreaController;
 use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\BookingController as AdminBookingController;
 use App\Http\Controllers\Admin\MiceInquiryController as AdminMiceInquiryController;
@@ -60,6 +62,8 @@ Route::get('/mice', [FrontendMiceController::class, 'index'])->name('mice.index'
 Route::get('/mice/{slug}', [FrontendMiceController::class, 'show'])->name('mice.show');
 Route::get('/restaurants', [FrontendRestaurantController::class, 'index'])->name('restaurants.index');
 Route::get('/restaurants/{slug}', [FrontendRestaurantController::class, 'show'])->name('restaurants.show');
+Route::get('/recreation-areas', [FrontendRecreationAreaController::class, 'index'])->name('recreation-areas.index');
+Route::get('/recreation-areas/{slug}', [FrontendRecreationAreaController::class, 'show'])->name('recreation-areas.show');
 Route::get('/contact-us', [ContactController::class, 'index'])->name('contact.index');
 
 // Booking & Inquiries
@@ -130,6 +134,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
         Route::resource('rooms', AdminRoomController::class);
         Route::resource('mice', AdminMiceRoomController::class);
         Route::resource('restaurants', AdminRestaurantController::class);
+        Route::resource('recreation-areas', AdminRecreationAreaController::class);
+        Route::delete('recreation-areas/images/{image}', [AdminRecreationAreaController::class, 'destroyImage'])->name('recreation-areas.image.destroy');
         Route::resource('users', UserController::class)->only(['index', 'create', 'store', 'edit', 'update']);
         Route::resource('mice-inquiries', AdminMiceInquiryController::class)->only(['index', 'destroy']);
         Route::resource('affiliates', AdminAffiliateController::class)->only(['index', 'update']);

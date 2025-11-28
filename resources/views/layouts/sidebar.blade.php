@@ -38,6 +38,7 @@
                 <a href="{{ route('admin.rooms.index') }}" class="flex items-center rounded-md px-4 py-2.5 text-sm font-medium transition-colors {{ request()->routeIs('admin.rooms.*') ? 'bg-brand-gold text-brand-black' : 'hover:bg-gray-700 hover:text-white' }}">Rooms</a>
                 <a href="{{ route('admin.mice.index') }}" class="flex items-center rounded-md px-4 py-2.5 text-sm font-medium transition-colors {{ request()->routeIs('admin.mice.*') ? 'bg-brand-gold text-brand-black' : 'hover:bg-gray-700 hover:text-white' }}">MICE</a>
                 <a href="{{ route('admin.restaurants.index') }}" class="flex items-center rounded-md px-4 py-2.5 text-sm font-medium transition-colors {{ request()->routeIs('admin.restaurants.*') ? 'bg-brand-gold text-brand-black' : 'hover:bg-gray-700 hover:text-white' }}">Restaurants</a>
+                <a href="{{ route('admin.recreation-areas.index') }}" class="flex items-center rounded-md px-4 py-2.5 text-sm font-medium transition-colors {{ request()->routeIs('admin.recreation-areas.*') ? 'bg-brand-gold text-brand-black' : 'hover:bg-gray-700 hover:text-white' }}">Recreation Areas</a>
 
                 <hr class="border-gray-700 my-2">
                 <h6 class="px-4 pt-2 pb-1 text-xs font-semibold uppercase text-gray-400">Settings</h6>

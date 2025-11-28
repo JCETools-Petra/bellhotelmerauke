@@ -74,6 +74,9 @@
                         <a class="nav-link {{ request()->routeIs('restaurants.*') ? 'active' : '' }}" href="{{ route('restaurants.index') }}">Restaurants</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('recreation-areas.*') ? 'active' : '' }}" href="{{ route('recreation-areas.index') }}">Recreation Area</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('contact.index') ? 'active' : '' }}" href="{{ route('contact.index') }}">Contact Us</a>
                     </li>
                     <li class="nav-item dropdown">
@@ -135,6 +138,7 @@
             <div class="mb-3">
                 <a href="{{ route('home') }}" class="text-white-50 mx-2 text-decoration-none">Home</a>
                 <a href="{{ route('rooms.index') }}" class="text-white-50 mx-2 text-decoration-none">Rooms</a>
+                <a href="{{ route('recreation-areas.index') }}" class="text-white-50 mx-2 text-decoration-none">Recreation Area</a>
                 <a href="{{ route('contact.index') }}" class="text-white-50 mx-2 text-decoration-none">Contact Us</a>
                 <a href="{{ route('pages.terms') }}" class="text-white-50 mx-2 text-decoration-none">Terms & Conditions</a>
             </div>
