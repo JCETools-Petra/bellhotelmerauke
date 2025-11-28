@@ -52,6 +52,22 @@
                 <a href="{{ route('admin.commissions.index') }}" class="flex items-center rounded-md px-4 py-2.5 text-sm font-medium transition-colors {{ request()->routeIs('admin.commissions.*') ? 'bg-brand-gold text-brand-black' : 'hover:bg-gray-700 hover:text-white' }}">
                     Commissions
                 </a>
+
+            @elseif(Auth::user()->role == 'frontoffice')
+                <h6 class="px-4 pt-2 pb-1 text-xs font-semibold uppercase text-gray-400">General</h6>
+                <a href="{{ route('home') }}" class="flex items-center rounded-md px-4 py-2.5 text-sm font-medium transition-colors hover:bg-gray-700 hover:text-white" target="_blank">Lihat Website</a>
+                <a href="{{ route('admin.dashboard') }}" class="flex items-center rounded-md px-4 py-2.5 text-sm font-medium transition-colors {{ request()->routeIs('admin.dashboard') ? 'bg-brand-gold text-brand-black' : 'hover:bg-gray-700 hover:text-white' }}">Dashboard</a>
+
+                <hr class="border-gray-700 my-2">
+                <h6 class="px-4 pt-2 pb-1 text-xs font-semibold uppercase text-gray-400">Booking Management</h6>
+                <a href="{{ route('admin.bookings.index') }}" class="flex items-center rounded-md px-4 py-2.5 text-sm font-medium transition-colors {{ request()->routeIs('admin.bookings.*') ? 'bg-brand-gold text-brand-black' : 'hover:bg-gray-700 hover:text-white' }}">Bookings</a>
+
+                <hr class="border-gray-700 my-2">
+                <h6 class="px-4 pt-2 pb-1 text-xs font-semibold uppercase text-gray-400">Commission Tracking</h6>
+                <a href="{{ route('admin.commissions.index') }}" class="flex items-center rounded-md px-4 py-2.5 text-sm font-medium transition-colors {{ request()->routeIs('admin.commissions.*') ? 'bg-brand-gold text-brand-black' : 'hover:bg-gray-700 hover:text-white' }}">
+                    <span>Commissions</span>
+                    <span class="ml-2 text-xs bg-blue-500 text-white px-2 py-0.5 rounded-full">View Only</span>
+                </a>
             @endif
         </nav>
     </div>
