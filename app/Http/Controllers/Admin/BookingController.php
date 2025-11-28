@@ -118,6 +118,17 @@ class BookingController extends Controller
         // 3. Ubah status booking menjadi 'confirmed'
         $booking->update(['status' => 'confirmed']);
 
+        // Log activity for frontoffice
+        if (auth()->user() && auth()->user()->role === 'frontoffice') {
+            ActivityLog::log(
+                'update',
+                "Confirmed pay-at-hotel booking #{$booking->id} for guest {$booking->guest_name}, commission generated",
+                'Booking',
+                $booking->id,
+                ['action' => 'confirm_pay_at_hotel', 'status_change' => ['from' => 'awaiting_arrival', 'to' => 'confirmed']]
+            );
+        }
+
         return back()->with('success', "Booking #{$booking->id} has been confirmed and commission has been generated.");
     }
 

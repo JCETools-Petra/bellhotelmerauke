@@ -8,6 +8,7 @@ use App\Models\Affiliate;
 use App\Models\Booking;
 use App\Models\Commission;
 use Illuminate\Support\Facades\Gate;
+use App\Models\ActivityLog;
 
 class CommissionController extends Controller
 {
@@ -98,12 +99,35 @@ class CommissionController extends Controller
     {
         if (! Gate::allows('manage-commissions')) abort(403);
 
+        // Get count of commissions that will be marked as paid
+        $commissions = Commission::where('affiliate_id', $affiliate->id)
+            ->where('status', 'unpaid')
+            ->get();
+
+        $count = $commissions->count();
+        $totalAmount = $commissions->sum('commission_amount');
+
+        // Update all unpaid commissions to paid
         Commission::where('affiliate_id', $affiliate->id)
             ->where('status', 'unpaid')
-            // Sebaiknya hapus filter per bulan ini agar bisa membayar semua komisi,
-            // atau biarkan jika memang sengaja hanya untuk bulan ini.
-            // ->whereMonth('created_at', now()->month) 
             ->update(['status' => 'paid']);
+
+        // Log activity for frontoffice
+        if (auth()->user() && auth()->user()->role === 'frontoffice') {
+            $affiliateName = $affiliate->user ? $affiliate->user->name : "Affiliate #{$affiliate->id}";
+            ActivityLog::log(
+                'update',
+                "Marked {$count} commission(s) as paid for affiliate {$affiliateName}, total amount: Rp " . number_format($totalAmount, 0, ',', '.'),
+                'Commission',
+                null,
+                [
+                    'affiliate_id' => $affiliate->id,
+                    'commission_count' => $count,
+                    'total_amount' => $totalAmount,
+                    'status_change' => ['from' => 'unpaid', 'to' => 'paid']
+                ]
+            );
+        }
 
         return back()->with('success', 'All unpaid commissions for this affiliate have been marked as paid.');
     }
