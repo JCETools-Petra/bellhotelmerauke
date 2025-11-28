@@ -15,11 +15,7 @@
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 overflow-x-auto">
-                    @if($isFrontoffice)
-                        <p class="text-gray-600 mb-4">Halaman ini menampilkan ringkasan komisi yang belum dibayar. Klik "View Details" untuk melihat rincian.</p>
-                    @else
-                        <p class="text-gray-600 mb-4">Halaman ini menampilkan ringkasan komisi yang belum dibayar per-affiliate. Klik "View Details & Pay" untuk melihat rincian dan melakukan pembayaran.</p>
-                    @endif
+                    <p class="text-gray-600 mb-4">Halaman ini menampilkan ringkasan komisi yang belum dibayar per-affiliate. Klik "View Details & Pay" untuk melihat rincian dan melakukan pembayaran.</p>
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
@@ -35,13 +31,12 @@
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         @if ($affiliate->user)
                                             @if($isFrontoffice)
-                                                {{-- For frontoffice: show only first name initial --}}
+                                                {{-- For frontoffice: show only first name initial, no email --}}
                                                 @php
                                                     $nameParts = explode(' ', $affiliate->user->name);
                                                     $shortName = $nameParts[0] . ' ' . (isset($nameParts[1]) ? substr($nameParts[1], 0, 1) . '.' : '');
                                                 @endphp
                                                 <div class="font-medium text-gray-900">{{ $shortName }}</div>
-                                                <div class="text-sm text-gray-500">***@***</div>
                                             @else
                                                 {{-- For admin/accounting: show full details --}}
                                                 <div class="font-medium text-gray-900">{{ $affiliate->user->name }}</div>
@@ -65,14 +60,10 @@
                                                         ? (explode(' ', $affiliate->user->name)[0] . ' ' . (isset(explode(' ', $affiliate->user->name)[1]) ? substr(explode(' ', $affiliate->user->name)[1], 0, 1) . '.' : ''))
                                                         : $affiliate->user->name;
                                                 @endphp
-                                                onclick="openCommissionModal({{ $affiliate->id }}, '{{ addslashes($displayName) }}', {{ $isFrontoffice ? 'true' : 'false' }})"
+                                                onclick="openCommissionModal({{ $affiliate->id }}, '{{ addslashes($displayName) }}')"
                                             @endif
                                             {{ ($affiliate->unpaid_amount ?? 0) > 0 ? '' : 'disabled' }}>
-                                            @if($isFrontoffice)
-                                                View Details
-                                            @else
-                                                View Details & Pay
-                                            @endif
+                                            View Details & Pay
                                         </button>
                                     </td>
                                 </tr>
@@ -111,24 +102,22 @@
                     </table>
                 </div>
             </div>
-            @if(!$isFrontoffice)
             <div class="mt-4 pt-4 border-t flex justify-end">
                 <form id="payForm" method="POST">
                     @csrf
                     <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Mark All as Paid</button>
                 </form>
             </div>
-            @endif
         </div>
     </div>
 
     <script>
-        function openCommissionModal(affiliateId, affiliateName, isFrontoffice = false) {
+        function openCommissionModal(affiliateId, affiliateName) {
             document.getElementById('modalTitle').innerText = 'Unpaid Commissions for ' + affiliateName + ' (This Month)';
 
-            // Set the form action (only if not frontoffice)
+            // Set the form action
             const payForm = document.getElementById('payForm');
-            if (payForm && !isFrontoffice) {
+            if (payForm) {
                 payForm.action = '/admin/commissions/' + affiliateId + '/pay';
             }
     

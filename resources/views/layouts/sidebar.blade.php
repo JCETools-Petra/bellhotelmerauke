@@ -63,10 +63,9 @@
                 <a href="{{ route('admin.bookings.index') }}" class="flex items-center rounded-md px-4 py-2.5 text-sm font-medium transition-colors {{ request()->routeIs('admin.bookings.*') ? 'bg-brand-gold text-brand-black' : 'hover:bg-gray-700 hover:text-white' }}">Bookings</a>
 
                 <hr class="border-gray-700 my-2">
-                <h6 class="px-4 pt-2 pb-1 text-xs font-semibold uppercase text-gray-400">Commission Tracking</h6>
+                <h6 class="px-4 pt-2 pb-1 text-xs font-semibold uppercase text-gray-400">Commission Management</h6>
                 <a href="{{ route('admin.commissions.index') }}" class="flex items-center rounded-md px-4 py-2.5 text-sm font-medium transition-colors {{ request()->routeIs('admin.commissions.*') ? 'bg-brand-gold text-brand-black' : 'hover:bg-gray-700 hover:text-white' }}">
-                    <span>Commissions</span>
-                    <span class="ml-2 text-xs bg-blue-500 text-white px-2 py-0.5 rounded-full">View Only</span>
+                    Commissions
                 </a>
             @endif
         </nav>
