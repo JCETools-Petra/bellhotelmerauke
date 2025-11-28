@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Commission;
 use Illuminate\Support\Facades\Gate;
 use App\Models\Affiliate;
+use App\Models\ActivityLog;
 
 class BookingController extends Controller
 {
@@ -43,9 +44,21 @@ class BookingController extends Controller
             'status' => 'required|in:pending,confirmed,cancelled',
         ]);
 
+        $oldStatus = $booking->status;
         $newStatus = $request->status;
         $booking->status = $newStatus;
         $booking->save();
+
+        // Log activity for frontoffice
+        if (auth()->user() && auth()->user()->role === 'frontoffice') {
+            ActivityLog::log(
+                'update',
+                "Updated booking #{$booking->id} status from {$oldStatus} to {$newStatus} for guest {$booking->guest_name}",
+                'Booking',
+                $booking->id,
+                ['before' => ['status' => $oldStatus], 'after' => ['status' => $newStatus]]
+            );
+        }
 
         // Cek jika status diubah menjadi "confirmed" DAN booking ini memiliki affiliate
         if ($newStatus === 'confirmed' && $booking->affiliate_id) {
@@ -78,6 +91,16 @@ class BookingController extends Controller
 
     public function destroy(Booking $booking)
     {
+        // Log activity for frontoffice
+        if (auth()->user() && auth()->user()->role === 'frontoffice') {
+            ActivityLog::log(
+                'delete',
+                "Deleted booking #{$booking->id} for guest {$booking->guest_name}",
+                'Booking',
+                $booking->id
+            );
+        }
+
         $booking->delete();
         return back()->with('success', 'Booking deleted successfully.');
     }

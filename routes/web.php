@@ -150,6 +150,10 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
         Route::post('mice-inquiries', [\App\Http\Controllers\Admin\MiceInquiryController::class, 'store'])->name('mice-inquiries.store');
         Route::delete('mice-inquiries/{commission}', [\App\Http\Controllers\Admin\MiceInquiryController::class, 'destroy'])->name('mice-inquiries.destroy');
         Route::resource('hero-sliders', App\Http\Controllers\Admin\HeroSliderController::class);
+
+        // Activity Logs - Admin only
+        Route::get('/activity-logs', [\App\Http\Controllers\Admin\ActivityLogController::class, 'index'])->name('activity-logs.index');
+        Route::get('/activity-logs/{activityLog}', [\App\Http\Controllers\Admin\ActivityLogController::class, 'show'])->name('activity-logs.show');
     });
 });
 
