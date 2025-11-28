@@ -26,11 +26,30 @@ class AuthServiceProvider extends ServiceProvider
          * Mengembalikan true jika peran pengguna adalah 'admin' atau 'accounting'.
          */
         Gate::define('manage-commissions', function ($user) {
-        return in_array($user->role, ['admin', 'accounting']);
+            return in_array($user->role, ['admin', 'accounting']);
         });
 
+        /**
+         * Gate untuk melihat komisi (view-only).
+         * Frontoffice bisa lihat tapi tidak bisa manage (mark as paid).
+         */
+        Gate::define('view-commissions', function ($user) {
+            return in_array($user->role, ['admin', 'accounting', 'frontoffice']);
+        });
+
+        /**
+         * Gate untuk akses admin penuh.
+         */
         Gate::define('admin', function ($user) {
             return $user->role === 'admin';
+        });
+
+        /**
+         * Gate untuk akses booking management.
+         * Admin dan frontoffice bisa manage bookings.
+         */
+        Gate::define('manage-bookings', function ($user) {
+            return in_array($user->role, ['admin', 'frontoffice']);
         });
     }
 }
