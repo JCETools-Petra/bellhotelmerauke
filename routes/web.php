@@ -107,15 +107,15 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Commission routes - view access for frontoffice, manage access for admin/accounting
+    // Commission routes - view and manage access for admin, accounting, and frontoffice
     Route::middleware('role:admin,accounting,frontoffice')->group(function () {
         Route::get('/commissions', [CommissionController::class, 'index'])->name('commissions.index');
         Route::get('/commissions/{affiliate}', [CommissionController::class, 'show'])->name('commissions.show');
+        Route::post('/commissions/{affiliate}/pay', [CommissionController::class, 'markAsPaid'])->name('commissions.pay');
     });
 
-    // Commission management (pay, create) - only admin and accounting
+    // Commission creation (manual) - only admin and accounting
     Route::middleware('role:admin,accounting')->group(function () {
-        Route::post('/commissions/{affiliate}/pay', [CommissionController::class, 'markAsPaid'])->name('commissions.pay');
         Route::resource('commissions', CommissionController::class)->only(['create', 'store']);
     });
 

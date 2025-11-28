@@ -23,15 +23,15 @@ class AuthServiceProvider extends ServiceProvider
     {
         /**
          * Mendefinisikan Gate untuk manajemen komisi.
-         * Mengembalikan true jika peran pengguna adalah 'admin' atau 'accounting'.
+         * Mengembalikan true jika peran pengguna adalah 'admin', 'accounting', atau 'frontoffice'.
          */
         Gate::define('manage-commissions', function ($user) {
-            return in_array($user->role, ['admin', 'accounting']);
+            return in_array($user->role, ['admin', 'accounting', 'frontoffice']);
         });
 
         /**
-         * Gate untuk melihat komisi (view-only).
-         * Frontoffice bisa lihat tapi tidak bisa manage (mark as paid).
+         * Gate untuk melihat komisi.
+         * Admin, accounting, dan frontoffice bisa lihat komisi.
          */
         Gate::define('view-commissions', function ($user) {
             return in_array($user->role, ['admin', 'accounting', 'frontoffice']);
