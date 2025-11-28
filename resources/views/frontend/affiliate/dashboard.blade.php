@@ -9,19 +9,21 @@
             <h1 class="display-5">Affiliate Dashboard</h1>
             <div class="ms-auto">
                 {{-- Tombol Booking Kamar --}}
-                <a href="{{ route('affiliate.bookings.create') }}" class="btn btn-primary mb-2 mb-md-0">Create New Booking</a>
-                
-                {{-- Tombol Booking MICE (Route sudah benar: affiliate.special_mice.index) --}}
-                <a href="{{ route('affiliate.special_mice.index') }}" class="btn btn-success mb-2 mb-md-0">Booking MICE</a>
-                
-                {{-- Tombol MICE Kit --}}
-                <a href="{{ route('affiliate.mice-kit.index') }}" class="btn btn-info mb-2 mb-md-0">Digital MICE Kit</a>
+                <div class="ms-auto">
+                    {{-- Tombol Booking Kamar --}}
+                    <a href="{{ route('affiliate.bookings.create') }}" class="btn btn-primary mb-2 mb-md-0">Create New Booking</a>
+                    
+                    {{-- PERBAIKAN DI SINI: Ubah 'mice_booking' menjadi 'special_mice' --}}
+                    <a href="{{ route('affiliate.special_mice.index') }}" class="btn btn-success mb-2 mb-md-0">Booking MICE</a>
+                    
+                    {{-- Tombol MICE Kit --}}
+                    <a href="{{ route('affiliate.mice-kit.index') }}" class="btn btn-info mb-2 mb-md-0">Digital MICE Kit</a>
+                </div>
             </div>
         </div>
 
         {{-- ... Sisa konten dashboard (Affiliate Link, Statistics, Commission History) tetap sama ... --}}
         <div class="card mb-4 shadow-sm">
-             {{-- (Konten sama seperti sebelumnya) --}}
              <div class="card-body">
                 <h5 class="card-title">Your Unique Referral Link</h5>
                 <p class="text-muted">Bagikan link ini untuk mulai mendapatkan komisi.</p>
@@ -34,7 +36,6 @@
 
         {{-- Statistics --}}
         <div class="row">
-            {{-- ... (Block Statistik) ... --}}
              <div class="col-md-4 mb-4">
                 <div class="card text-center h-100">
                     <div class="card-body">
@@ -62,7 +63,6 @@
         </div>
         
         <h3 class="mt-5 mb-4">Commission History</h3>
-        {{-- ... (Tabel Commission History) ... --}}
         <div class="card shadow-sm">
             <div class="table-responsive">
                 <table class="table table-hover table-striped mb-0">
