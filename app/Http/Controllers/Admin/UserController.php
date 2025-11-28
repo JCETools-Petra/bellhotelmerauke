@@ -31,7 +31,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['required', 'string', 'max:20', 'unique:users'],
-            'role' => ['required', 'in:admin,accounting,user'],
+            'role' => ['required', 'in:admin,accounting,frontoffice,user'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -57,7 +57,7 @@ class UserController extends Controller
         // Gate::authorize('admin'); // <-- Baris ini sudah tidak diperlukan
         $request->validate([
             'name' => 'required|string|max:255',
-            'role' => 'required|in:admin,accounting,affiliate,user',
+            'role' => 'required|in:admin,accounting,frontoffice,affiliate,user',
         ]);
 
         $user->update([
