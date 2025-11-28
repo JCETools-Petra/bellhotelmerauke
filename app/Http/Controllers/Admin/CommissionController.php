@@ -53,16 +53,19 @@ class CommissionController extends Controller
 
     public function index()
     {
-        if (! Gate::allows('manage-commissions')) abort(403);
+        // Check permission - frontoffice can view, but with limited data
+        if (! Gate::allows('view-commissions')) abort(403);
 
         $affiliates = Affiliate::with('user')
             ->withSum(['commissions as unpaid_amount' => function ($query) {
                 $query->where('status', 'unpaid');
-            // --- PERBAIKAN 2 ---
-            }], 'commission_amount') // Diubah dari 'amount'
+            }], 'commission_amount')
             ->paginate(15);
-            
-        return view('admin.commissions.index', compact('affiliates'));
+
+        // Check if user is frontoffice to hide sensitive data
+        $isFrontoffice = auth()->user()->role === 'frontoffice';
+
+        return view('admin.commissions.index', compact('affiliates', 'isFrontoffice'));
     }
 
     public function update(Request $request, Commission $commission)
@@ -80,14 +83,14 @@ class CommissionController extends Controller
 
     public function show(Affiliate $affiliate)
     {
-        if (! Gate::allows('manage-commissions')) abort(403);
+        if (! Gate::allows('view-commissions')) abort(403);
 
         $commissions = Commission::where('affiliate_id', $affiliate->id)
             ->where('status', 'unpaid')
             ->whereMonth('created_at', now()->month)
             ->with('booking')
             ->get();
-            
+
         return response()->json($commissions);
     }
 
