@@ -100,6 +100,11 @@ Route::middleware(['auth', 'verified', 'affiliate.active'])->prefix('affiliate')
     
     Route::get('/mice-kit/preview/{id}', [App\Http\Controllers\Affiliate\MiceKitController::class, 'preview'])->name('mice-kit.preview');
     Route::get('/mice-kit/stream/{id}', [App\Http\Controllers\Affiliate\MiceKitController::class, 'stream'])->name('mice-kit.stream');
+
+    // Special MICE Booking Routes
+    Route::get('/special-mice', [App\Http\Controllers\Affiliate\AffiliateMiceBookingController::class, 'index'])->name('special_mice.index');
+    Route::get('/special-mice/{id}', [App\Http\Controllers\Affiliate\AffiliateMiceBookingController::class, 'show'])->name('special_mice.show');
+    Route::post('/special-mice', [App\Http\Controllers\Affiliate\AffiliateMiceBookingController::class, 'store'])->name('special_mice.store');
 });
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
