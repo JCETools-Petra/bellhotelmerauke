@@ -21,21 +21,14 @@ class AffiliateMiceBookingController extends Controller
     {
         $miceKit = MiceKit::findOrFail($id);
 
-
-        
-
         // Ambil data affiliate user yang sedang login untuk mendapatkan commission_rate
         $user = Auth::user();
-        // Asumsi relasi user ke affiliate ada (jika user adalah affiliate)
-        // Jika menggunakan logic manual: $affiliate = \App\Models\Affiliate::where('user_id', $user->id)->first();
-        // Di sini saya gunakan asumsi standar relasi Laravel:
-
         $affiliate = $user->affiliate;
 
-        $affiliate = $user->affiliate; 
+        // Ambil commission rate untuk view
+        $commissionRate = $affiliate ? $affiliate->commission_rate : 0;
 
-
-        return view('frontend.affiliate.special_mice.show', compact('miceKit', 'affiliate'));
+        return view('frontend.affiliate.special_mice.show', compact('miceKit', 'affiliate', 'commissionRate'));
     }
 
     public function store(Request $request)
