@@ -81,6 +81,9 @@ class SettingController extends Controller
             'whatsapp_pay_at_hotel_admin_template' => 'nullable|string',
             'whatsapp_pay_at_hotel_customer_template' => 'nullable|string',
             // ----------------------------------------------------------------------------
+
+            // MICE Commission Rate
+            'mice_commission_rate' => 'required|numeric|min:0|max:100',
         ]);
 
         // 2) Proses file upload (logo, favicon, hero image)

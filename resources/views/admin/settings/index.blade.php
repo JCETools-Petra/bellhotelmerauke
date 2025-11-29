@@ -331,6 +331,39 @@
                     </div>
                 </div>
 
+                {{-- MICE Commission Rate --}}
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                    <h3 class="text-lg font-medium text-gray-900 border-b border-gray-200 pb-3 mb-4">MICE Commission Settings</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="mice_commission_rate" class="block font-medium text-sm text-gray-700">MICE Commission Rate (%)</label>
+                            <div class="mt-1 relative rounded-md shadow-sm">
+                                <input
+                                    type="number"
+                                    step="0.01"
+                                    min="0"
+                                    max="100"
+                                    name="mice_commission_rate"
+                                    id="mice_commission_rate"
+                                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                    value="{{ old('mice_commission_rate', $settings['mice_commission_rate'] ?? '2.5') }}"
+                                    required
+                                >
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <span class="text-gray-500 sm:text-sm">%</span>
+                                </div>
+                            </div>
+                            <p class="mt-2 text-xs text-gray-500">
+                                Komisi yang akan diterima affiliate untuk setiap booking MICE yang berhasil. Default: 2.5%
+                            </p>
+                            <div class="mt-3 p-3 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-700 text-sm">
+                                <p class="font-medium">⚠️ Penting:</p>
+                                <p class="mt-1">Commission rate ini <strong>dilindungi</strong> dan tidak dapat diubah oleh affiliate di frontend. Hanya admin yang dapat mengatur nilai ini.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 {{-- Terms and Conditions --}}
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                     <h3 class="text-lg font-medium text-gray-900 border-b border-gray-200 pb-3 mb-4">Terms and Conditions Page</h3>
