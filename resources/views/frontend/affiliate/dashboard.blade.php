@@ -9,7 +9,7 @@
             <h1 class="display-5">Affiliate Dashboard</h1>
             <div class="ms-auto">
                 <a href="{{ route('affiliate.bookings.create') }}" class="btn btn-primary mb-2 mb-md-0">Create New Booking</a>
-                <a href="{{ route('affiliate.special_mice.index') }}" class="btn btn-success mb-2 mb-md-0">Book MICE</a>
+                <a href="{{ route('affiliate.special_mice.show', 6) }}" class="btn btn-success mb-2 mb-md-0">Book MICE</a>
                 <a href="{{ route('affiliate.mice-kit.index') }}" class="btn btn-info mb-2 mb-md-0">Digital MICE Kit</a>
             </div>
         </div>
