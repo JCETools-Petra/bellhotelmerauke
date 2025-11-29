@@ -21,12 +21,19 @@ class AffiliateMiceBookingController extends Controller
     {
         $miceKit = MiceKit::findOrFail($id);
 
+
+        
+
         // Ambil data affiliate user yang sedang login untuk mendapatkan commission_rate
         $user = Auth::user();
         // Asumsi relasi user ke affiliate ada (jika user adalah affiliate)
         // Jika menggunakan logic manual: $affiliate = \App\Models\Affiliate::where('user_id', $user->id)->first();
         // Di sini saya gunakan asumsi standar relasi Laravel:
+
         $affiliate = $user->affiliate;
+
+        $affiliate = $user->affiliate; 
+
 
         return view('frontend.affiliate.special_mice.show', compact('miceKit', 'affiliate'));
     }
@@ -42,8 +49,6 @@ class AffiliateMiceBookingController extends Controller
         ]);
 
         $miceKit = MiceKit::findOrFail($request->mice_kit_id);
-
-        // Kita gunakan total_price dari INPUT user (sesuai permintaan),
         // bukan hitungan otomatis controller.
         $finalPrice = $request->total_price;
 
@@ -65,3 +70,4 @@ class AffiliateMiceBookingController extends Controller
             ->with('success', 'Booking MICE berhasil! Komisi akan tercatat setelah pembayaran dikonfirmasi.');
     }
 }
+
