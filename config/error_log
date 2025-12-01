@@ -1,0 +1,16 @@
+[18-Aug-2025 06:14:47 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/belg7925/public_html/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/belg7925/public_html/config/services.php on line 18
+[18-Aug-2025 06:24:16 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/belg7925/public_html/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/belg7925/public_html/config/cache.php on line 18
+[18-Aug-2025 06:34:26 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/belg7925/public_html/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/belg7925/public_html/config/filesystems.php on line 16
+[18-Aug-2025 06:54:24 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/belg7925/public_html/config/queue.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/belg7925/public_html/config/queue.php on line 16

@@ -1,0 +1,17 @@
+[16-Aug-2025 16:40:47 Asia/Jakarta] PHP Fatal error:  Uncaught RuntimeException: Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 7.4.33. in /home/belg7925/public_html/vendor/composer/platform_check.php:22
+Stack trace:
+#0 /home/belg7925/public_html/vendor/composer/autoload_real.php(25): require()
+#1 /home/belg7925/public_html/vendor/autoload.php(22): ComposerAutoloaderInit88970a0117c062eed55fa8728fc43833::getLoader()
+#2 /home/belg7925/public_html/public/index.php(14): require('/home/belg7925/...')
+#3 {main}
+  thrown in /home/belg7925/public_html/vendor/composer/platform_check.php on line 22
+[21-Aug-2025 07:49:33 UTC] PHP Fatal error:  Cannot use Carbon\Carbon as Carbon because the name is already in use in /home/belg7925/public_html/app/Http/Controllers/Frontend/BookingController.php on line 14
+[21-Aug-2025 13:09:38 UTC] PHP Fatal error:  Cannot use App\Http\Controllers\Frontend\BookingController as BookingController because the name is already in use in /home/belg7925/public_html/routes/web.php on line 36
+[21-Aug-2025 13:09:47 UTC] PHP Fatal error:  Cannot use App\Http\Controllers\Frontend\BookingController as BookingController because the name is already in use in /home/belg7925/public_html/routes/web.php on line 36
+[21-Aug-2025 13:11:32 UTC] PHP Fatal error:  Cannot use App\Http\Controllers\Frontend\BookingController as BookingController because the name is already in use in /home/belg7925/public_html/routes/web.php on line 36
+[21-Aug-2025 13:12:17 UTC] PHP Fatal error:  Cannot use App\Http\Controllers\Frontend\BookingController as BookingController because the name is already in use in /home/belg7925/public_html/routes/web.php on line 36
+[21-Aug-2025 13:12:20 UTC] PHP Fatal error:  Cannot use App\Http\Controllers\Frontend\BookingController as BookingController because the name is already in use in /home/belg7925/public_html/routes/web.php on line 36
+[21-Aug-2025 13:12:20 UTC] PHP Fatal error:  Cannot use App\Http\Controllers\Frontend\BookingController as BookingController because the name is already in use in /home/belg7925/public_html/routes/web.php on line 36
+[21-Aug-2025 13:12:20 UTC] PHP Fatal error:  Cannot use App\Http\Controllers\Frontend\BookingController as BookingController because the name is already in use in /home/belg7925/public_html/routes/web.php on line 36
+[30-Sep-2025 06:02:07 UTC] PHP Fatal error:  Cannot use Illuminate\Support\Facades\Auth as Auth because the name is already in use in /home/belg7925/public_html/app/Http/Controllers/Frontend/BookingController.php on line 17
+[30-Sep-2025 06:02:51 UTC] PHP Fatal error:  Cannot use Illuminate\Support\Facades\Auth as Auth because the name is already in use in /home/belg7925/public_html/app/Http/Controllers/Frontend/BookingController.php on line 17
