@@ -6,7 +6,7 @@
     {{-- MIDTRANS SNAP SCRIPT --}}
     {{-- Pastikan Client Key sudah ada di .env --}}
     <script type="text/javascript"
-            src="https://app.sandbox.midtrans.com/snap/snap.js"
+            src="https://app{{ config('midtrans.is_production') ? '' : '.sandbox' }}.midtrans.com/snap/snap.js"
             data-client-key="{{ config('midtrans.client_key') }}"></script>
 
     <div class="min-h-screen bg-gray-50 py-20 relative overflow-hidden">
