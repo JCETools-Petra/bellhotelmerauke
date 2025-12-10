@@ -10,17 +10,48 @@ use Carbon\Carbon;
 
 class HotelierMarketService
 {
-    private string $apiKey;
-    private string $apiUrl;
-    private int $propertyId;
+    private ?string $apiKey;
+    private ?string $apiUrl;
+    private ?int $propertyId;
     private int $timeout;
 
     public function __construct()
     {
         $this->apiKey = config('services.hoteliermarket.api_key');
-        $this->apiUrl = config('services.hoteliermarket.api_url');
-        $this->propertyId = config('services.hoteliermarket.property_id');
+        $this->apiUrl = config('services.hoteliermarket.api_url', 'https://hoteliermarket.my.id');
+        $this->propertyId = config('services.hoteliermarket.property_id', 13);
         $this->timeout = config('services.hoteliermarket.timeout', 30);
+    }
+
+    /**
+     * Check if service is properly configured
+     *
+     * @return bool
+     */
+    private function isConfigured(): bool
+    {
+        return !empty($this->apiKey) && !empty($this->apiUrl) && !empty($this->propertyId);
+    }
+
+    /**
+     * Get configuration error message
+     *
+     * @return string
+     */
+    private function getConfigurationError(): string
+    {
+        $missing = [];
+        if (empty($this->apiKey)) {
+            $missing[] = 'HOTELIERMARKET_API_KEY';
+        }
+        if (empty($this->apiUrl)) {
+            $missing[] = 'HOTELIERMARKET_API_URL';
+        }
+        if (empty($this->propertyId)) {
+            $missing[] = 'HOTELIERMARKET_PROPERTY_ID';
+        }
+
+        return 'API not configured. Missing: ' . implode(', ', $missing) . '. Please check your .env file.';
     }
 
     /**
@@ -30,6 +61,11 @@ class HotelierMarketService
      */
     public function fetchRoomPricing(): ?array
     {
+        if (!$this->isConfigured()) {
+            Log::error('HotelierMarket API: ' . $this->getConfigurationError());
+            return null;
+        }
+
         try {
             $response = Http::timeout($this->timeout)
                 ->withHeaders([
