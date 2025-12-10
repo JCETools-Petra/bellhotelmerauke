@@ -45,6 +45,7 @@ use App\Http\Controllers\Api\RoomPriceController;
 
 use App\Http\Controllers\Affiliate\AffiliateReviewController;
 use App\Http\Controllers\Admin\AdminReviewController;
+use App\Http\Controllers\Admin\ApiSyncController;
 
 /*
 |--------------------------------------------------------------------------
@@ -153,6 +154,12 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
         Route::resource('mice-kits', AdminMiceKitController::class);
         Route::resource('hero-sliders', AdminHeroSliderController::class);
         Route::resource('mice-inquiries', AdminMiceInquiryController::class)->only(['index', 'destroy']);
+
+        // API Sync Routes
+        Route::get('/api-sync', [ApiSyncController::class, 'index'])->name('api-sync.index');
+        Route::post('/api-sync/test', [ApiSyncController::class, 'testConnection'])->name('api-sync.test');
+        Route::post('/api-sync/sync', [ApiSyncController::class, 'sync'])->name('api-sync.sync');
+        Route::get('/api-sync/status', [ApiSyncController::class, 'status'])->name('api-sync.status');
     });
     Route::get('/reviews', [AdminReviewController::class, 'index'])->name('reviews.index');
     Route::patch('/reviews/{id}/toggle', [AdminReviewController::class, 'toggleVisibility'])->name('reviews.toggle');

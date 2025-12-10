@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    'hoteliermarket' => [
+        'api_key' => env('HOTELIERMARKET_API_KEY'),
+        'api_url' => env('HOTELIERMARKET_API_URL', 'https://hoteliermarket.my.id'),
+        'property_id' => env('HOTELIERMARKET_PROPERTY_ID', 13),
+        'timeout' => env('HOTELIERMARKET_TIMEOUT', 30),
+    ],
+
 ];

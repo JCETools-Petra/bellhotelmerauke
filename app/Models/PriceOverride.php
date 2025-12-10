@@ -13,6 +13,13 @@ class PriceOverride extends Model
         'date',
         'room_id',
         'price',
+        'source',
+        'api_synced_at',
+        'external_reference_id',
+    ];
+
+    protected $casts = [
+        'api_synced_at' => 'datetime',
     ];
 
     // Tambahkan relasi ke model Room
