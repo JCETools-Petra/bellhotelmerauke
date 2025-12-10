@@ -104,9 +104,11 @@
                     @foreach($rooms as $room)
                     <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 flex flex-col h-full">
                         <div class="relative h-64 overflow-hidden flex-shrink-0">
+                            {{-- LOGIKA GAMBAR DIKEMBALIKAN SEPERTI CODE AWAL ANDA --}}
                             <img src="{{ $room->image ? asset('storage/' . $room->image) : ($room->images->first() ? asset('storage/' . $room->images->first()->path) : 'https://placehold.co/600x400') }}" 
                                  alt="{{ $room->name }}" 
                                  class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                            
                             <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-900 shadow">
                                 {{ $room->type ?? 'Deluxe' }}
                             </div>
@@ -120,18 +122,35 @@
                                 {{ $room->description }}
                             </p>
                             
+                            {{-- BAGIAN INI SAJA YANG BERUBAH (HARGA DINAMIS) --}}
                             <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
                                 <div>
                                     <span class="text-xs text-gray-400 uppercase">Mulai dari</span>
-                                    <div class="text-lg font-bold text-gray-900">
-                                        Rp {{ number_format($room->price, 0, ',', '.') }}
-                                        <span class="text-xs text-gray-400 font-normal">/ malam</span>
+                                    <div class="font-bold text-gray-900">
+                                        @if(Auth::check() && in_array(Auth::user()->role, ['admin', 'affiliate']))
+                                            {{-- AFFILIATE: Lihat harga coret + harga diskon --}}
+                                            <div class="text-xs text-gray-400 line-through">
+                                                Rp {{ number_format($room->calculated_public_price, 0, ',', '.') }}
+                                            </div>
+                                            <div class="text-lg text-yellow-600">
+                                                Rp {{ number_format($room->calculated_affiliate_price, 0, ',', '.') }}
+                                                <span class="text-xs text-gray-400 font-normal text-black">/ malam</span>
+                                            </div>
+                                        @else
+                                            {{-- GUEST: Lihat harga Public (+3%) --}}
+                                            <div class="text-lg">
+                                                Rp {{ number_format($room->calculated_public_price, 0, ',', '.') }}
+                                                <span class="text-xs text-gray-400 font-normal">/ malam</span>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <a href="{{ route('rooms.show', $room->slug ?? $room->id) }}" class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-yellow-100 text-yellow-600 hover:bg-yellow-500 hover:text-white transition-all">
                                     <i class="fas fa-arrow-right"></i>
                                 </a>
                             </div>
+                            {{-- SELESAI BAGIAN HARGA --}}
+
                         </div>
                     </div>
                     @endforeach
@@ -175,12 +194,6 @@
                     <div class="grid grid-cols-2 gap-4 h-full min-h-[400px]">
                         @if(isset($miceRooms) && $miceRooms->count() > 0)
                             @foreach($miceRooms as $mice)
-                                {{-- 
-                                   LOGIKA GRID PINTAR:
-                                   - Jika total ada 3 ruangan (Muting, Bupul, Sota): 
-                                     Gambar pertama akan LEBAR (col-span-2), 2 berikutnya berdampingan.
-                                   - Jika total 2 ruangan: Keduanya berdampingan rata.
-                                --}}
                                 <div class="relative group overflow-hidden rounded-2xl h-full min-h-[200px] 
                                     {{ $miceRooms->count() == 3 && $loop->first ? 'col-span-2 row-span-2 min-h-[300px]' : 'col-span-1' }}">
                                     
@@ -216,7 +229,7 @@
         </div>
     </section>
 
-    {{-- 5. TESTIMONI AFFILIATE (ADDED SECTION) --}}
+    {{-- 5. TESTIMONI AFFILIATE --}}
     @if(isset($reviews) && $reviews->count() > 0)
     <section class="py-20 bg-gray-50">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">

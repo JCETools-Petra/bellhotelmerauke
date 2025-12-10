@@ -72,6 +72,9 @@ Route::get('/recreation-areas/{slug}', [RecreationAreaController::class, 'show']
 Route::get('/contact-us', [ContactController::class, 'index'])->name('contact.index');
 
 // Booking & Inquiries
+// --- PERBAIKAN: Menambahkan Route Booking Create ---
+Route::get('/booking/create/{room_id?}', [BookingController::class, 'create'])->name('booking.create'); 
+// --------------------------------------------------
 Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
 Route::post('/mice-inquiries', [MiceInquiryController::class, 'store'])->name('mice.inquiries.store');
 Route::get('/booking/success/{booking:access_token}', [BookingController::class, 'success'])->name('booking.success');

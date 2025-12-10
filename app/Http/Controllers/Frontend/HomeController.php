@@ -4,51 +4,52 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Room;
-use App\Models\MiceRoom; // <--- Import Model MiceRoom
+use App\Models\MiceRoom;
 use App\Models\HeroSlider;
-use Illuminate\Support\Facades\Auth;
 use App\Models\AffiliateReview;
+use App\Models\PriceOverride;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        // 1. Hero Sliders
-        $heroSliders = HeroSlider::where('is_active', true)
-            ->orderBy('order')
-            ->get();
+        $heroSliders = HeroSlider::where('is_active', true)->orderBy('order')->get();
 
-        // 2. Featured Rooms (Kamar)
-        $rooms = Room::with('images') // Pastikan eager load images jika pakai tabel relasi
+        // Ambil data kamar
+        $rooms = Room::with('images')
             ->where('is_available', true)
+            // ->whereNull('deleted_at') // HAPUS/KOMENTAR JIKA BELUM MIGRATE DB
             ->latest()
             ->take(3)
             ->get();
 
-        // 3. Featured MICE (TAMBAHAN BARU)
-        $miceRooms = \App\Models\MiceRoom::with('images')
-            ->where('is_available', true) // Pastikan Sota Room statusnya available
-            ->latest()
-            ->take(3) // Ubah jadi 3 agar Sota, Muting, dan Bupul masuk semua
-            ->get();
+        // === LOGIKA HARGA (Hotelier + 3%) ===
+        foreach ($rooms as $room) {
+            // 1. Cek harga sync hari ini
+            $todayPrice = PriceOverride::where('room_id', $room->id)
+                ->where('date', today()->toDateString())
+                ->value('price');
 
-        // Logika Diskon (Biarkan seperti sebelumnya)
-        if (Auth::check() && in_array(Auth::user()->role, ['admin', 'affiliate']) && $rooms->isNotEmpty()) {
-            foreach ($rooms as $room) {
-                if ($room->discount_percentage > 0) {
-                    $originalPrice = $room->getOriginal('price');
-                    $discountAmount = $originalPrice * ($room->discount_percentage / 100);
-                    $room->price = $originalPrice - $discountAmount;
-                }
-            }
+            // 2. Harga Dasar (Pakai harga sync jika ada, jika tidak pakai harga DB)
+            $basePrice = $todayPrice ? $todayPrice : $room->price;
+
+            // 3. Harga Public (Base + 3%)
+            $publicPrice = $basePrice * 1.03;
+
+            // 4. Harga Affiliate (Public - Diskon Room)
+            $discount = ($room->discount_percentage > 0) ? $room->discount_percentage : 10;
+            $affiliatePrice = $publicPrice * (1 - ($discount / 100));
+
+            // Simpan ke variabel sementara untuk View
+            $room->calculated_public_price = $publicPrice;
+            $room->calculated_affiliate_price = $affiliatePrice;
         }
-        
-        $reviews = AffiliateReview::with('affiliate.user')
-                ->where('is_visible', true)
-                ->latest()
-                ->take(6) // Ambil 6 review terbaru
-                ->get();
-        // Kirim semua variabel ke view
+        // ====================================
+
+        $miceRooms = MiceRoom::with('images')->where('is_available', true)->latest()->take(3)->get();
+        $reviews = AffiliateReview::with('affiliate.user')->where('is_visible', true)->latest()->take(6)->get();
+
         return view('frontend.home', compact('heroSliders', 'rooms', 'miceRooms', 'reviews'));
     }
 }

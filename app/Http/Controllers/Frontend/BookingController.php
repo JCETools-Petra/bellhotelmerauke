@@ -173,4 +173,18 @@ class BookingController extends Controller
             Log::error('Failed to send admin booking notification: ' . $e->getMessage());
         }
     }
+    public function create(Request $request, $room_id = null)
+    {
+        // Jika room_id dilempar via URL parameter (bukan query string)
+        if ($room_id) {
+            $selectedRoom = Room::find($room_id);
+        } else {
+            // Jika room_id dilempar via query string ?room_id=X
+            $selectedRoom = Room::find($request->query('room_id'));
+        }
+
+        $rooms = Room::where('is_available', true)->get();
+
+        return view('frontend.booking.create', compact('rooms', 'selectedRoom'));
+    }
 }
