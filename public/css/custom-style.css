@@ -1,0 +1,565 @@
+/* =================================================================== */
+/* File: public/css/custom-style.css                                   */
+/* Deskripsi: File styling utama untuk tema frontend.                  */
+/* =================================================================== */
+
+
+/* =================================================================== */
+/* BAGIAN 1: DEFINISI VARIABEL GLOBAL (WARNA & FONT)
+/* =================================================================== */
+:root {
+    --primary-font: 'Montserrat', sans-serif;
+    --heading-font: 'Playfair Display', serif;
+    
+    --color-black: #222222; 
+    --color-white: #FFFFFF;
+    --color-red: #A4161A;   /* Merah marun elegan */
+    --color-gold: #D4AF37;  /* Emas mewah */
+    --color-light-gray: #f8f9fa;
+}
+
+
+/* =================================================================== */
+/* BAGIAN 2: GAYA DASAR & TIPOGRAFI
+/* =================================================================== */
+body {
+    font-family: var(--primary-font);
+    background-color: var(--color-light-gray);
+    color: var(--color-black);
+    padding-top: 135px; /* Jarak aman untuk Navbar + Running Text */
+}
+
+/* KHUSUS Homepage: Hapus jarak atas karena ada Hero Section */
+body.homepage {
+    padding-top: 0;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3 {
+    font-family: var(--heading-font);
+    font-weight: 700;
+    color: var(--color-black);
+}
+
+.section-title {
+    font-size: 2.8rem;
+    color: var(--color-black);
+    margin-bottom: 1rem;
+    position: relative;
+    padding-bottom: 1rem;
+}
+.section-title::after { 
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background-color: var(--color-gold);
+}
+
+
+/* =================================================================== */
+/* BAGIAN 3: NAVIGASI (NAVBAR, DROPDOWN, RUNNING TEXT)
+/* =================================================================== */
+
+/* --- Navbar Utama --- */
+.navbar {
+    background-color: var(--color-black) !important;
+    padding: 1rem 0;
+    transition: all 0.3s ease;
+}
+.navbar-brand {
+    font-family: var(--heading-font);
+    font-size: 1.8rem;
+    color: var(--color-gold) !important;
+    font-weight: 800;
+    transition: color 0.3s ease;
+}
+.navbar-brand:hover {
+    color: var(--color-white) !important;
+}
+.nav-link {
+    color: var(--color-white) !important;
+    font-weight: 500;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+    position: relative;
+    padding-bottom: 8px;
+}
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--color-gold);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.4s ease;
+}
+.nav-link:hover::after, .nav-link.active::after {
+    transform: scaleX(1);
+}
+.nav-link:hover, .nav-link.active {
+    color: var(--color-gold) !important;
+}
+
+/* --- Dropdown di Navbar --- */
+@media (min-width: 992px) {
+    .navbar .nav-item.dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0;
+    }
+}
+.navbar .dropdown-menu {
+    background-color: var(--color-black);
+    border: 1px solid var(--color-gold);
+    border-radius: 0.5rem;
+    padding: 0.5rem 0;
+}
+.navbar .dropdown-menu .dropdown-item {
+    color: var(--color-white);
+    transition: all 0.2s ease-in-out;
+}
+.navbar .dropdown-menu .dropdown-item:hover {
+    background-color: #333;
+    color: var(--color-gold);
+}
+
+/* --- Running Text (Marquee) --- */
+.running-text-container {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    padding: 10px 0;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    position: fixed;
+    top: 80px; /* Posisi di bawah navbar */
+    left: 0;
+    z-index: 1029;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.running-text-link {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+}
+.running-text-link:hover {
+    color: var(--color-gold);
+}
+.running-text-content {
+    display: inline-block;
+    padding-left: 100%;
+    margin: 0;
+    font-weight: 500;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    animation: marquee 25s linear infinite;
+}
+.running-text-container:hover .running-text-content {
+    animation-play-state: paused;
+}
+@keyframes marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+
+/* =================================================================== */
+/* BAGIAN 4: KOMPONEN UI (TOMBOL, KARTU, PAGINASI)
+/* =================================================================== */
+
+/* --- Tombol Kustom --- */
+.btn-custom {
+    background-color: var(--color-red);
+    color: var(--color-white);
+    font-family: var(--primary-font);
+    font-weight: 700;
+    padding: 12px 30px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 2px solid var(--color-red);
+    transition: all 0.3s ease;
+}
+.btn-custom:hover {
+    background-color: #831012; /* Merah lebih gelap saat hover */
+    border-color: #831012;
+    color: var(--color-white);
+}
+
+/* --- Kartu (Card) --- */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); 
+    transition: all 0.4s ease;
+    overflow: hidden; 
+}
+.card:hover {
+    transform: translateY(-10px); 
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15);
+}
+.card-title {
+    color: var(--color-gold);
+}
+.card-img-top {
+    height: 250px;
+    object-fit: cover; 
+    transition: transform 0.4s ease;
+}
+.card:hover .card-img-top {
+    transform: scale(1.05);
+}
+.card-body {
+    padding: 2rem;
+}
+.card-price {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-black);
+}
+
+/* --- Paginasi --- */
+.pagination .page-link {
+    background-color: #f8f9fa !important;
+    color: #343a40 !important;
+    border-color: #dee2e6 !important;
+}
+.pagination .page-link:hover {
+    background-color: #e9ecef !important;
+    color: #000 !important;
+}
+.pagination .page-item.active .page-link {
+    background-color: var(--color-red) !important;
+    border-color: var(--color-red) !important;
+    color: #fff !important;
+}
+.pagination .page-item.disabled .page-link {
+    background-color: #e9ecef !important;
+    color: #6c757d !important;
+    border-color: #dee2e6 !important;
+}
+
+
+/* =================================================================== */
+/* BAGIAN 5: GAYA SPESIFIK HALAMAN & SLIDER
+/* =================================================================== */
+
+/* --- Hero Section (Homepage) --- */
+.hero-section {
+    position: relative;
+    padding: 10rem 0;
+    color: var(--color-white);
+    background-size: cover;
+    background-position: center;
+}
+.hero-section::before { 
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+.hero-section .container {
+    position: relative; 
+    z-index: 2;
+}
+.hero-section h1 {
+    font-size: 4.5rem;
+    color: var(--color-white);
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+}
+.hero-section .lead {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* --- Form Booking di Hero Section --- */
+.hero-booking-form {
+    background-color: rgba(0, 0, 0, 0.5); 
+    backdrop-filter: blur(5px); 
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.hero-booking-form .form-label {
+    color: var(--color-white);
+    font-weight: 500;
+    margin-bottom: .5rem;
+}
+.hero-booking-form .d-grid {
+    align-self: flex-end;
+}
+
+/* =================================================================== */
+/* ===         STYLE SLIDER GAMBAR DI KARTU KAMAR (FIXED)          === */
+/* =================================================================== */
+
+.card .carousel {
+    position: relative;
+    /* Atur tinggi slider agar sama dengan tinggi gambar yang kita inginkan */
+    height: 250px; 
+}
+
+.card .carousel-inner,
+.card .carousel-item {
+    height: 100%; /* Pastikan inner container mengisi tinggi parent */
+    border-radius: 10px 10px 0 0;
+}
+
+/* PERBAIKAN UTAMA: Paksa gambar untuk mengisi container-nya */
+.card .carousel-item img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover; /* Ini akan memotong gambar (bukan merusaknya) agar pas */
+    border-radius: 10px 10px 0 0;
+}
+
+/* Style untuk panah navigasi (tetap sama) */
+.card .carousel-control-prev,
+.card .carousel-control-next {
+    width: 25%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover .carousel-control-prev,
+.card:hover .carousel-control-next {
+    opacity: 0.7;
+}
+
+.card .carousel-control-prev-icon,
+.card .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    padding: 1rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-size: 60%;
+}
+
+/* --- Slider Restoran (Continuous Marquee) --- */
+/* PENTING: Animasi (@keyframes) dan lebar (width) untuk slider ini 
+   dihasilkan secara dinamis oleh JavaScript di home.blade.php
+   agar dapat menyesuaikan dengan jumlah gambar. */
+.slider {
+    background: white;
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, .125);
+    height: 250px;
+    margin: auto;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+.slider::before,
+.slider::after {
+    background: linear-gradient(to right, rgba(248, 249, 250, 1) 0%, rgba(248, 249, 250, 0) 100%);
+    content: "";
+    height: 100%;
+    position: absolute;
+    width: 200px;
+    z-index: 2;
+}
+.slider::before { left: 0; top: 0; }
+.slider::after { right: 0; top: 0; transform: rotateZ(180deg); }
+
+.slide-track {
+    display: flex; /* Animasi dan lebar diatur oleh JS */
+}
+.slide-track:hover {
+    animation-play-state: paused;
+}
+.slide {
+    height: 250px;
+    width: 400px;
+    padding: 15px;
+}
+.slide a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* --- Halaman Detail Restoran --- */
+.restaurant-gallery .main-image-container {
+    border-radius: 10px;
+    overflow: hidden;
+}
+.restaurant-gallery .main-image-container img {
+    width: 100%;
+    height: auto;
+    max-height: 600px;
+    object-fit: cover;
+}
+.thumbnail-images-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+}
+.thumbnail-item img {
+    cursor: pointer;
+    width: 100%;
+    height: 80px;
+    object-fit: cover;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+.thumbnail-item img:hover {
+    opacity: 1;
+}
+.thumbnail-item img.active {
+    opacity: 1;
+    border-color: var(--color-red);
+    box-shadow: 0 0 10px rgba(164, 22, 26, 0.5);
+}
+.restaurant-details .display-5 {
+    font-family: var(--heading-font);
+    color: var(--color-black);
+}
+.restaurant-description {
+    font-family: var(--primary-font);
+    line-height: 1.8;
+    color: #555;
+}
+
+
+/* =================================================================== */
+/* BAGIAN 6: WIDGET & UTILITAS
+/* =================================================================== */
+
+/* --- Efek Logo --- */
+.highlighted-logo {
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.7)) 
+            drop-shadow(0 0 15px rgba(255, 223, 0, 0.5));
+    transition: all 0.3s ease-in-out;
+}
+.highlighted-logo:hover {
+    filter: drop-shadow(0 0 12px rgba(255, 223, 0, 0.9)) 
+            drop-shadow(0 0 25px rgba(255, 245, 0, 0.7));
+    transform: scale(1.05);
+}
+
+/* --- Floating Social Media Bar --- */
+.floating-social-bar{
+    position: fixed;
+    top: 50%;
+    left: -50px;
+    width: 50px;
+    transform: translateY(-50%);
+    z-index: 1050;
+    transition: left .28s ease-in-out;
+}
+.floating-social-bar:hover{ left: 0; }
+.floating-social-bar ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.floating-social-bar ul li a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    color: #fff;
+    text-decoration: none;
+    margin-bottom: 2px;
+    border-radius: 0 10px 10px 0;
+}
+.floating-social-bar .social-tab{
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #111;
+    color: #fff;
+    padding: 10px 12px;
+    border-radius: 0 8px 8px 0;
+    font: 600 12px/1.1 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    cursor: default;
+    user-select: none;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.25);
+}
+.floating-social-bar .facebook a { background-color: #3b5998; }
+.floating-social-bar .instagram a {
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+}
+.floating-social-bar .whatsapp a { background-color: #25D366; }
+.floating-social-bar .linkedin a  { background-color: #0077b5; }
+.floating-social-bar .youtube a   { background-color: #FF0000; }
+.floating-social-bar .tiktok a    { background-color: #000000; }
+
+/* --- Utility Class --- */
+.preserve-format {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* =================================================================== */
+/* BAGIAN 7: PERBAIKAN HERO SLIDER
+/* =================================================================== */
+
+/* 1. Modifikasi Hero Section */
+.hero-section {
+    /* Hapus background-size/position, biarkan padding & color */
+    background-size: unset;
+    background-position: unset;
+    overflow: hidden; /* Pastikan slider tidak 'bocor' */
+}
+
+/* 2. Styling Slider sebagai Background */
+.hero-slider-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* Paling belakang */
+}
+
+.hero-slider-background .carousel,
+.hero-slider-background .carousel-inner,
+.hero-slider-background .carousel-item {
+    height: 100%;
+}
+
+.hero-slider-background .carousel-item img {
+    height: 100%;
+    object-fit: cover; /* Penting: agar gambar menutupi area */
+    object-position: center;
+}
+
+/* 3. Pastikan overlay gelap ada DI ATAS slider */
+.hero-section::before {
+    z-index: 1; /* DI ATAS slider */
+}
+
+/* 4. Styling Konten (H1, form, dll) */
+.hero-content-overlay {
+    position: relative;
+    z-index: 2; /* DI ATAS overlay gelap */
+}
+
+/* 5. Styling navigasi slider di hero */
+.hero-section .carousel-control-prev,
+.hero-section .carousel-control-next {
+    z-index: 3; /* Pastikan di atas segalanya */
+}
